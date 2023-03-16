@@ -1,6 +1,8 @@
 
 # Ecowitt Sensors Homebridge Plugin
 
+**NOTE: This is a fork of [homebridge-ecowitt](https://github.com/spatialdude/homebridge-ecowitt) that makes it work with Node 18**
+
 A Homebridge plugin providing support for a wide range of **Ecowitt** sensors.
 
 The plugin operates as a service that listens for data reports from an Ecowitt WiFi Gateway or Weather Display Console.
