@@ -3,6 +3,10 @@
 
 **NOTE: This is a fork of [homebridge-ecowitt](https://github.com/spatialdude/homebridge-ecowitt) that makes it work with Node 18**
 
+[![npm](https://img.shields.io/npm/v/@conquistadore/homebridge-ecowitt?style=for-the-badge)](https://www.npmjs.com/package/@conquistadore/homebridge-ecowitt)
+
+---
+
 A Homebridge plugin providing support for a wide range of **Ecowitt** sensors.
 
 The plugin operates as a service that listens for data reports from an Ecowitt WiFi Gateway or Weather Display Console.
@@ -37,7 +41,7 @@ Search for "Ecowitt" in [homebridge-config-ui-x](https://github.com/oznu/homebri
 #### Option 2: Manually Install:
 
 ```
-sudo npm install -g homebridge-ecowitt
+sudo npm install -g @conquistadore/homebridge-ecowitt
 ```
 
 ## Configuration
