@@ -165,6 +165,7 @@ export class EcowittPlatform implements DynamicPlatformPlugin {
   unregisterAccessories() {
     this.log.info('Unregistering cached accessories:', this.accessories.length);
     this.api.unregisterPlatformAccessories(PLUGIN_NAME, PLATFORM_NAME, this.accessories);
+    this.accessories.length = 0;
   }
 
   //----------------------------------------------------------------------------
