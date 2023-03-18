@@ -34,7 +34,7 @@ Features include -
 **Note**: This plugin is still in development. Please consider this when installing it on your system. Feedback is welcome.
 
 ## Requirements
-* GW1000 Gateway or HP2551 Weather Display Console
+* GW1000/GW1100A Gateway or HP2551 Weather Display Console
 
 ## Installation
 
@@ -86,6 +86,7 @@ After the gateway or display console has been configuration has been updated, se
 ## Tested Devices
 
 * GW1000 - WiFi Weather Station Gateway with Indoor Temperature, Humidity and Barometric Sensor
+* GW1100A - WiFi Weather Station Gateway with Indoor Temperature, Humidity and Barometric Sensor
 * HP2551 - Weather Station Display Console
 * WH24 - Solar Powered 7-in-1 Outdoor Sensor
 * WH31 - Multi-Channel Temperature and humidity Sensor

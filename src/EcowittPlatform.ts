@@ -3,6 +3,7 @@ import { API, DynamicPlatformPlugin, Logger, PlatformAccessory, PlatformConfig, 
 import { PLATFORM_NAME, PLUGIN_NAME } from './settings';
 
 import { GW1000 } from './GW1000';
+import { GW1100A } from './GW1100A';
 import { WH25 } from './WH25';
 import { WH31 } from './WH31';
 import { WH41 } from './WH41';
@@ -174,8 +175,8 @@ export class EcowittPlatform implements DynamicPlatformPlugin {
   //----------------------------------------------------------------------------
 
   registerAccessories(dataReport, logLevel) {
-    const stationTypeInfo = dataReport?.stationtype.match(/(EasyWeather|GW1000)_?(.*)/);
-    const modelInfo = dataReport?.model.match(/(HP2551CA|GW1000)_(.*)/);
+    const stationTypeInfo = dataReport?.stationtype.match(/(EasyWeather|GW1000|GW1100A)_?(.*)/);
+    const modelInfo = dataReport?.model.match(/(HP2551CA|GW1000|GW1100A)(_(.*))?/);
 
     this.log.info('stationTypeInfo:', JSON.stringify(stationTypeInfo));
     this.log.info('modelInfo:', JSON.stringify(modelInfo));
@@ -195,6 +196,14 @@ export class EcowittPlatform implements DynamicPlatformPlugin {
           this.baseStationInfo.firmwareRevision = stationTypeInfo[2];
           if (!this.config?.thbin?.hide) {
             this.addSensorType(true, 'GW1000');
+          }
+          break;
+
+        case 'GW1100A':
+          this.baseStationInfo.hardwareRevision = dataReport.stationtype;
+          this.baseStationInfo.firmwareRevision = stationTypeInfo[2];
+          if (!this.config?.thbin?.hide) {
+            this.addSensorType(true, 'GW1100A');
           }
           break;
 
@@ -283,6 +292,10 @@ export class EcowittPlatform implements DynamicPlatformPlugin {
         switch (sensor.type) {
           case 'GW1000':
             sensor.accessory = new GW1000(this, accessory);
+            break;
+
+          case 'GW1100A':
+            sensor.accessory = new GW1100A(this, accessory);
             break;
 
           case 'WH25':
