@@ -92,7 +92,7 @@ export class EcowittPlatform implements DynamicPlatformPlugin {
 
     this.api.on('didFinishLaunching', () => {
 
-      this.unregisterAccessories();
+      //this.unregisterAccessories();
 
       this.dataReportServer.listen(this.config.port, () => {
         this.log.info('Listening for data reports on: %s', this.dataReportServer.url);
@@ -268,14 +268,11 @@ export class EcowittPlatform implements DynamicPlatformPlugin {
 
         // it is possible to remove platform accessories at any time using `api.unregisterPlatformAccessories`, eg.:
         // remove platform accessories when no longer present
-        this.api.unregisterPlatformAccessories(PLUGIN_NAME, PLATFORM_NAME, [existingAccessory]);
-        this.log.info('Removing existing accessory from cache:', existingAccessory.displayName);
+        //this.api.unregisterPlatformAccessories(PLUGIN_NAME, PLATFORM_NAME, [existingAccessory]);
+        //this.log.info('Removing existing accessory from cache:', existingAccessory.displayName);
         //} else {
       }
       {
-        // the accessory does not yet exist, so we need to create it
-        this.log.info('Adding new accessory type:', sensor.type, 'channel:', sensor.channel);
-
         // create a new sensor accessory
         const accessory = new this.api.platformAccessory(sensor.type, uuid);
 
@@ -321,8 +318,13 @@ export class EcowittPlatform implements DynamicPlatformPlugin {
             break;
         }
 
-        // link the sensor accessory to the platform
-        this.api.registerPlatformAccessories(PLUGIN_NAME, PLATFORM_NAME, [accessory]);
+        if (!existingAccessory) {
+          // the accessory does not yet exist, so we need to create it
+          this.log.info('Adding new accessory type:', sensor.type, 'channel:', sensor.channel);
+
+          // link the sensor accessory to the platform
+          this.api.registerPlatformAccessories(PLUGIN_NAME, PLATFORM_NAME, [accessory]);
+        }
       }
     }
   }

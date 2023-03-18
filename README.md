@@ -5,6 +5,7 @@
 - Node 18 support
 - Fixes bug with cached accessories being removed twice (Error: Cannot find the bridged Accessory to remove)
 - Reduce excessive logging when not in debug mode
+- Do not reregister known accessories (Loses accessory configuration after each homebridge restart, i.E. Room, Automations, etc.)
 
 [![npm](https://img.shields.io/npm/v/@conquistadore/homebridge-ecowitt?style=for-the-badge)](https://www.npmjs.com/package/@conquistadore/homebridge-ecowitt)
 
