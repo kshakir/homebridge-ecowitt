@@ -1,7 +1,10 @@
 
 # Ecowitt Sensors Homebridge Plugin
 
-**NOTE: This is a fork of [homebridge-ecowitt](https://github.com/spatialdude/homebridge-ecowitt) that makes it work with Node 18**
+**NOTE: This is a fork of [homebridge-ecowitt](https://github.com/spatialdude/homebridge-ecowitt) that addresses the following issues:**
+- Node 18 support
+- Fixes bug with cached accessories being removed twice (Error: Cannot find the bridged Accessory to remove)
+- Reduce excessive logging when not in debug mode
 
 [![npm](https://img.shields.io/npm/v/@conquistadore/homebridge-ecowitt?style=for-the-badge)](https://www.npmjs.com/package/@conquistadore/homebridge-ecowitt)
 
