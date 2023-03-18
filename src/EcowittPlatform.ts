@@ -1,4 +1,4 @@
-import { API, DynamicPlatformPlugin, Logger, PlatformAccessory, PlatformConfig, Service, Characteristic } from 'homebridge';
+import { API, DynamicPlatformPlugin, Logger, PlatformAccessory, PlatformConfig, Service, Characteristic, LogLevel } from 'homebridge';
 
 import { PLATFORM_NAME, PLUGIN_NAME } from './settings';
 
@@ -77,8 +77,8 @@ export class EcowittPlatform implements DynamicPlatformPlugin {
     this.dataReportServer.post(
       this.config.path,
       (req, res, next) => {
-        this.log.info('Data source address:', req.socket.remoteAddress);
-        this.log.info('Request:', req.toString());
+        this.log.debug('Data source address:', req.socket.remoteAddress);
+        this.log.debug('Request:', req.toString());
         this.onDataReport(req.body);
         next();
       });
@@ -129,16 +129,19 @@ export class EcowittPlatform implements DynamicPlatformPlugin {
       return;
     }
 
-    this.log.info('Data report:', JSON.stringify(dataReport, undefined, 2));
+    const logLevel: LogLevel = this.lastDataReport ? LogLevel.DEBUG : LogLevel.INFO;
+
+    this.log.log(logLevel, 'Data report:', JSON.stringify(dataReport, undefined, 2));
 
     if (!this.lastDataReport) {
+      this.log.log(logLevel, 'Registering accessories');
       this.lastDataReport = dataReport;
-      this.registerAccessories(dataReport);
+      this.registerAccessories(dataReport, logLevel);
     } else {
       this.lastDataReport = dataReport;
     }
 
-    this.updateAccessories(dataReport);
+    this.updateAccessories(dataReport, logLevel);
   }
 
   //----------------------------------------------------------------------------
@@ -170,7 +173,7 @@ export class EcowittPlatform implements DynamicPlatformPlugin {
 
   //----------------------------------------------------------------------------
 
-  registerAccessories(dataReport) {
+  registerAccessories(dataReport, logLevel) {
     const stationTypeInfo = dataReport?.stationtype.match(/(EasyWeather|GW1000)_?(.*)/);
     const modelInfo = dataReport?.model.match(/(HP2551CA|GW1000)_(.*)/);
 
@@ -310,7 +313,7 @@ export class EcowittPlatform implements DynamicPlatformPlugin {
             break;
 
           case 'WH65':
-            sensor.accessory = new WH65(this, accessory);
+            sensor.accessory = new WH65(this, accessory, logLevel);
             break;
 
           default:
@@ -326,13 +329,13 @@ export class EcowittPlatform implements DynamicPlatformPlugin {
 
   //----------------------------------------------------------------------------
 
-  updateAccessories(dataReport) {
+  updateAccessories(dataReport, logLevel) {
     const dateUTC = new Date(dataReport.dateutc);
-    this.log.info('Report time:', dateUTC);
+    this.log.log(logLevel, 'Report time:', dateUTC);
 
     for (const sensor of this.baseStationInfo.sensors) {
-      this.log.info('Updating:', sensor.type, 'channel:', sensor.channel);
-      sensor.accessory.update(dataReport);
+      this.log.log(logLevel, 'Updating:', sensor.type, 'channel:', sensor.channel);
+      sensor.accessory.update(dataReport, logLevel);
     }
   }
 }

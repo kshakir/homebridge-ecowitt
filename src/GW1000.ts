@@ -26,12 +26,12 @@ export class GW1000 extends ThermoHygroBaroSensor {
     this.setName(this.humiditySensor, 'Indoor Humidity');
   }
 
-  update(dataReport) {
-    this.platform.log.info('GW1000 Update');
-    this.platform.log.info('  tempinf:', dataReport.tempinf);
-    this.platform.log.info('  humidityin:', dataReport.humidityin);
-    this.platform.log.info('  baromrelin', dataReport.baromrelin);
-    this.platform.log.info('  baromabsin', dataReport.baromabsin);
+  update(dataReport, logLevel) {
+    this.platform.log.log(logLevel, 'GW1000 Update');
+    this.platform.log.log(logLevel, '  tempinf:', dataReport.tempinf);
+    this.platform.log.log(logLevel, '  humidityin:', dataReport.humidityin);
+    this.platform.log.log(logLevel, '  baromrelin', dataReport.baromrelin);
+    this.platform.log.log(logLevel, '  baromabsin', dataReport.baromabsin);
 
     this.updateTemperature(dataReport.tempinf);
     this.updateHumidity(dataReport.humidityin);

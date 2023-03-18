@@ -19,13 +19,13 @@ export class WH25 extends ThermoHygroBaroSensor {
     this.setName(this.humiditySensor, 'Indoor Humidity');
   }
 
-  update(dataReport) {
-    this.platform.log.info('WH25 Update');
-    this.platform.log.info('  wh25batt:', dataReport.wh25batt);
-    this.platform.log.info('  tempinf:', dataReport.tempinf);
-    this.platform.log.info('  humidityin:', dataReport.humidityin);
-    this.platform.log.info('  baromrelin', dataReport.baromrelin);
-    this.platform.log.info('  baromabsin', dataReport.baromabsin);
+  update(dataReport, logLevel) {
+    this.platform.log.log(logLevel, 'WH25 Update');
+    this.platform.log.log(logLevel, '  wh25batt:', dataReport.wh25batt);
+    this.platform.log.log(logLevel, '  tempinf:', dataReport.tempinf);
+    this.platform.log.log(logLevel, '  humidityin:', dataReport.humidityin);
+    this.platform.log.log(logLevel, '  baromrelin', dataReport.baromrelin);
+    this.platform.log.log(logLevel, '  baromabsin', dataReport.baromabsin);
 
     const lowBattery = dataReport.wh25batt === '1';
 

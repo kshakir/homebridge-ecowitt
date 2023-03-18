@@ -45,7 +45,8 @@ export class EcowittAccessory {
 
   //----------------------------------------------------------------------------
 
-  update(dataReport) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  update(dataReport, logLevel) {
     this.platform.log.error('Update not implemented:', dataReport);
   }
 

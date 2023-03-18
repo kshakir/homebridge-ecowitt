@@ -44,15 +44,15 @@ export class WH41 extends EcowittAccessory {
     this.battery = this.addBattery(this.name, true);
   }
 
-  update(dataReport) {
+  update(dataReport, logLevel) {
     const pm25batt = parseFloat(dataReport[`pm25batt${this.channel}`]);
     const pm25 = parseFloat(dataReport[`pm25_ch${this.channel}`]);
     const pm25_avg_24h = parseFloat(dataReport[`pm25_avg_24h_ch${this.channel}`]);
 
-    this.platform.log.info(`WH41 Channel ${this.channel} Update`);
-    this.platform.log.info('  pm25batt:', pm25batt);
-    this.platform.log.info('  pm25:', pm25);
-    this.platform.log.info('  pm25_avg_24h:', pm25_avg_24h);
+    this.platform.log.log(logLevel, `WH41 Channel ${this.channel} Update`);
+    this.platform.log.log(logLevel, '  pm25batt:', pm25batt);
+    this.platform.log.log(logLevel, '  pm25:', pm25);
+    this.platform.log.log(logLevel, '  pm25_avg_24h:', pm25_avg_24h);
 
     this.setStatusActive(this.airQualitySensor, true);
     this.setStatusActive(this.airQualitySensor24H, true);

@@ -23,15 +23,15 @@ export class WH31 extends ThermoHygroSensor {
     this.setName(this.humiditySensor, name || `CH${this.channel} Humidity`);
   }
 
-  update(dataReport) {
+  update(dataReport, logLevel) {
     const batt = dataReport[`batt${this.channel}`];
     const tempf = dataReport[`temp${this.channel}f`];
     const humidity = dataReport[`humidity${this.channel}`];
 
-    this.platform.log.info(`WH31 Channel ${this.channel} Update`);
-    this.platform.log.info('  batt:', batt);
-    this.platform.log.info('  tempf:', tempf);
-    this.platform.log.info('  humidity:', humidity);
+    this.platform.log.log(logLevel, `WH31 Channel ${this.channel} Update`);
+    this.platform.log.log(logLevel, '  batt:', batt);
+    this.platform.log.log(logLevel, '  tempf:', tempf);
+    this.platform.log.log(logLevel, '  humidity:', humidity);
 
     const lowBattery = batt === '1';
 
