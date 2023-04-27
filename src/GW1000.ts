@@ -22,7 +22,7 @@ export class GW1000 extends ThermoHygroBaroSensor {
     // .setCharacteristic(this.platform.Characteristic.SoftwareRevision, platform.baseStationInfo.softwareRevision)
     // .setCharacteristic(this.platform.Characteristic.FirmwareRevision, platform.baseStationInfo.firmwareRevision);
 
-    this.setName(this.temperatureSensor, 'Indoor Temperature');
+    this.setName(this.temperatureSensorPlus, 'Indoor Temperature');
     this.setName(this.humiditySensor, 'Indoor Humidity');
   }
 

@@ -15,7 +15,7 @@ export class WH25 extends ThermoHygroBaroSensor {
       'WH25',
       'Indoor Temperature, Humidity and Barometric Sensor');
 
-    this.setName(this.temperatureSensor, 'Indoor Temperature');
+    this.setName(this.temperatureSensorPlus, 'Indoor Temperature');
     this.setName(this.humiditySensor, 'Indoor Humidity');
   }
 
@@ -30,7 +30,7 @@ export class WH25 extends ThermoHygroBaroSensor {
     const lowBattery = dataReport.wh25batt === '1';
 
     this.updateTemperature(dataReport.tempinf);
-    this.updateStatusLowBattery(this.temperatureSensor, lowBattery);
+    this.updateStatusLowBattery(this.temperatureSensorPlus, lowBattery);
 
     this.updateHumidity(dataReport.humidityin);
     this.updateStatusLowBattery(this.humiditySensor, lowBattery);
