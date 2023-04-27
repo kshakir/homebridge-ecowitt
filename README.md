@@ -1,15 +1,8 @@
 
 # Ecowitt Sensors Homebridge Plugin
 
-**NOTE: This is a fork of [homebridge-ecowitt](https://github.com/spatialdude/homebridge-ecowitt) that addresses the following issues:**
-- Node 18 support
-- Fixes bug with cached accessories being removed twice (Error: Cannot find the bridged Accessory to remove)
-- Reduce excessive logging when not in debug mode
-- Do not reregister known accessories (Loses accessory configuration after each homebridge restart, i.E. Room, Automations, etc.)
-
-[![npm](https://img.shields.io/npm/v/@conquistadore/homebridge-ecowitt?style=for-the-badge)](https://www.npmjs.com/package/@conquistadore/homebridge-ecowitt)
-
----
+**NOTE: This is a fork of [homebridge-ecowitt](https://github.com/C0nquistadore/homebridge-ecowitt) that adds the following functionality:**
+- Creates a thermostat for temperature sensors so they showsup as a seperate tile in Homekit.
 
 A Homebridge plugin providing support for a wide range of **Ecowitt** sensors.
 
