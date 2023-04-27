@@ -1,13 +1,13 @@
 import { /*Service,*/ PlatformAccessory } from 'homebridge';
 import { EcowittPlatform } from './EcowittPlatform';
-import { ThermoHygroSensor } from './ThermoHygroSensor';
+import { ThermoHygroSensorPlus } from './ThermoHygroSensorPlus';
 import { OccupancySensor } from './OccupancySensor';
 
 import * as Utils from './Utils.js';
 
 //------------------------------------------------------------------------------
 
-export class ThermoHygroBaroSensor extends ThermoHygroSensor {
+export class ThermoHygroBaroSensor extends ThermoHygroSensorPlus {
   protected absolutePressureSensor: OccupancySensor;
   protected relativePressureSensor: OccupancySensor;
 

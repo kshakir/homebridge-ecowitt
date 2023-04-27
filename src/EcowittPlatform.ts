@@ -93,6 +93,7 @@ export class EcowittPlatform implements DynamicPlatformPlugin {
 
     this.api.on('didFinishLaunching', () => {
 
+      //bz remove
       //this.unregisterAccessories();
 
       this.dataReportServer.listen(this.config.port, () => {

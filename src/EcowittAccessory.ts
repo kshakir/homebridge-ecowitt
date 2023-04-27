@@ -170,6 +170,8 @@ export class EcowittAccessory {
       Utils.toCelcius(tempf));
   }
 
+
+
   //---------------------------------------------------------------------------
 
   updateCurrentRelativeHumidity(service: Service, humidity) {
