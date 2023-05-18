@@ -2,10 +2,9 @@
 # Ecowitt Sensors Homebridge Plugin
 
 **NOTE: This is a fork of [homebridge-ecowitt](https://github.com/C0nquistadore/homebridge-ecowitt) that adds the following functionality:**
-- Creates a thermostat tile for temperature sensors so they show up as a seperate tile in Homekit.
-- Adds an option in the config for showing these tiles.
-- Fixed an issue in the EcowittPlatform where the exisiting accessory was ignored.
-- Made curly braces start on newline (sorry, I couldn't help it).
+- Optionally creates (fake) thermostat tiles for temperature sensors so they show up as a seperate tile in Homekit.
+- Adds an option to the config to reregister the accessories.
+
 
 A Homebridge plugin providing support for a wide range of **Ecowitt** sensors.
 
@@ -19,6 +18,12 @@ Features include -
 
 ## Release Notes
 
+* 1.1.5
+  * Cloned from @conquistadore/homebridge-ecowitt v1.1.4 (2023-03-19)
+  * Changed the temperature sensors to optionally show up as Thermostat tiles in Homekit
+  * Added the option to unregister existing accessories trhough the config
+  * Fixed an issue with how the exisiting accessories were initialized
+  
 * 1.1.0
   * Added rain detection thresholds
   * Added lux conversion factor setting
