@@ -4,26 +4,21 @@ import { Sensor } from './Sensor';
 
 //------------------------------------------------------------------------------
 
-export class OccupancySensor extends Sensor {
+export class OccupancySensor extends Sensor
+{
 
-  constructor(
-    protected readonly platform: EcowittPlatform,
-    protected readonly accessory: PlatformAccessory,
-    protected readonly name: string,
-  ) {
-
-    super(platform,
-      accessory,
-      accessory.getService(name)
-      || accessory.addService(
-        platform.Service.OccupancySensor,
-        name,
-        platform.serviceUuid(name)));
+  constructor(protected readonly platform: EcowittPlatform,
+              protected readonly accessory: PlatformAccessory,
+              protected readonly name: string)
+  {
+    super(platform, accessory, accessory.getService(name) ||
+      accessory.addService(platform.Service.OccupancySensor, name, platform.serviceUuid(name)));
   }
 
   //---------------------------------------------------------------------------
 
-  setOccupancyDetected(occupancyDetected: boolean) {
+  setOccupancyDetected(occupancyDetected: boolean)
+  {
     this.service.setCharacteristic(
       this.platform.Characteristic.OccupancyDetected,
       occupancyDetected
@@ -31,7 +26,8 @@ export class OccupancySensor extends Sensor {
         : this.platform.Characteristic.OccupancyDetected.OCCUPANCY_NOT_DETECTED);
   }
 
-  updateOccupancyDetected(occupancyDetected: boolean) {
+  updateOccupancyDetected(occupancyDetected: boolean)
+  {
     this.service.updateCharacteristic(
       this.platform.Characteristic.OccupancyDetected,
       occupancyDetected

@@ -4,27 +4,22 @@ import { Sensor } from './Sensor';
 
 //------------------------------------------------------------------------------
 
-export class RainSensor extends Sensor {
-
-  constructor(
-    protected readonly platform: EcowittPlatform,
-    protected readonly accessory: PlatformAccessory,
-    protected readonly name: string,
-  ) {
-    super(platform,
-      accessory,
-      accessory.getService(name)
-      || accessory.addService(
-        platform.Service.LeakSensor,
-        name,
-        platform.serviceUuid(name)));
+export class RainSensor extends Sensor
+{
+  constructor(protected readonly platform: EcowittPlatform,
+              protected readonly accessory: PlatformAccessory,
+              protected readonly name: string)
+  {
+    super(platform, accessory, accessory.getService(name) ||
+      accessory.addService(platform.Service.LeakSensor, name, platform.serviceUuid(name)));
   }
 
   //----------------------------------------------------------------------------
 
-  public updateRate(ratein: number, thresholdmm) {
-    if (!isFinite(ratein)) {
-      //this.updateActive(false);
+  public updateRate(ratein: number, thresholdmm)
+  {
+    if (!isFinite(ratein))
+    {
       this.updateName('N/A');
       return;
     }
@@ -32,7 +27,8 @@ export class RainSensor extends Sensor {
     let rate: string;
     let ratemm: number;
 
-    switch (this.platform.config?.ws?.rain?.units) {
+    switch (this.platform.config?.ws?.rain?.units)
+    {
       case 'in':
         rate = `${ratein} in/h`;
         ratemm = ratein * 25.4;
@@ -45,16 +41,16 @@ export class RainSensor extends Sensor {
         break;
     }
 
-    //this.updateActive(true);
     this.updateName(`${this.name}: ${rate} ${this.toIntensity(ratein)}`);
     this.updateDetected(isFinite(thresholdmm) && ratemm > thresholdmm);
   }
 
   //----------------------------------------------------------------------------
 
-  public updateTotal(totalin: number, thresholdmm) {
-    if (!isFinite(totalin)) {
-      //this.updateActive(false);
+  public updateTotal(totalin: number, thresholdmm)
+  {
+    if (!isFinite(totalin))
+    {
       this.updateName('N/A');
       return;
     }
@@ -62,7 +58,8 @@ export class RainSensor extends Sensor {
     let total: string;
     let totalmm: number;
 
-    switch (this.platform.config?.ws?.rain?.units) {
+    switch (this.platform.config?.ws?.rain?.units)
+    {
       case 'in':
         total = `${totalin} in`;
         totalmm = totalin * 25.4;
@@ -75,22 +72,21 @@ export class RainSensor extends Sensor {
         break;
     }
 
-    //this.updateActive(true);
     this.updateName(`${this.name}: ${total}`);
     this.updateDetected(isFinite(thresholdmm) && totalmm > thresholdmm);
   }
 
   //----------------------------------------------------------------------------
 
-  private updateActive(active: boolean) {
-    this.service.updateCharacteristic(
-      this.platform.Characteristic.Active,
-      active);
+  private updateActive(active: boolean)
+  {
+    this.service.updateCharacteristic(this.platform.Characteristic.Active, active);
   }
 
   //----------------------------------------------------------------------------
 
-  private updateDetected(detected: boolean) {
+  private updateDetected(detected: boolean)
+  {
     this.service.updateCharacteristic(
       this.platform.Characteristic.LeakDetected,
       detected
@@ -100,16 +96,26 @@ export class RainSensor extends Sensor {
 
   //----------------------------------------------------------------------------
 
-  private toIntensity(ratein: number): string {
-    if (ratein <= 0) {
+  private toIntensity(ratein: number): string
+  {
+    if (ratein <= 0)
+    {
       return '';
-    } else if (ratein <= 0.098) {
+    }
+    else if (ratein <= 0.098)
+    {
       return 'Light';
-    } else if (ratein <= 0.3) {
+    }
+    else if (ratein <= 0.3)
+    {
       return 'Moderate';
-    } else if (ratein < 2) {
+    }
+    else if (ratein < 2)
+    {
       return 'Heavy';
-    } else {
+    }
+    else
+    {
       return 'Violent';
     }
   }

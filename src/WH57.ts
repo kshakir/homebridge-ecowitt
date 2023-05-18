@@ -25,13 +25,13 @@ export class WH57 extends EcowittAccessory {
     this.battery = this.addBattery('⚡');
   }
 
-  update(dataReport, logLevel) {
+  update(dataReport) {
 
-    this.platform.log.log(logLevel, 'WH57 Update');
-    this.platform.log.log(logLevel, '  wh57batt:', dataReport.wh57batt);
-    this.platform.log.log(logLevel, '  lightning:', dataReport.lightning);
-    this.platform.log.log(logLevel, '  lightning_num:', dataReport.lightning_num);
-    this.platform.log.log(logLevel, '  lightning_time:', dataReport.lightning_time);
+    this.platform.log.info('WH57 Update');
+    this.platform.log.debug('  wh57batt:', dataReport.wh57batt);
+    this.platform.log.debug('  lightning:', dataReport.lightning);
+    this.platform.log.debug('  lightning_num:', dataReport.lightning_num);
+    this.platform.log.debug('  lightning_time:', dataReport.lightning_time);
 
     // Battery
 

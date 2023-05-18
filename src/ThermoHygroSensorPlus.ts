@@ -1,44 +1,44 @@
 import { Service, PlatformAccessory } from 'homebridge';
 import { EcowittPlatform } from './EcowittPlatform';
-import { EcowittAccessory } from './EcowittAccessory';
+import { ThermoHygroSensor } from './ThermoHygroSensor';
 import * as Utils from './Utils.js';
 
-let current_temp = 0;
+export class ThermoHygroSensorPlus extends ThermoHygroSensor {
+  protected temperatureSensor: Service;
+  //protected humiditySensor: Service;
+  private current_temp = 0;
+  private current_humidity = 0;
 
-export class ThermoHygroSensorPlus extends EcowittAccessory {
-  protected temperatureSensorPlus: Service;
-  protected humiditySensor: Service;
- 
   constructor(
     protected readonly platform: EcowittPlatform,
     protected readonly accessory: PlatformAccessory,
   ) {
     super(platform, accessory);
 
-    this.temperatureSensorPlus = this.accessory.getService(this.platform.Service.Thermostat)
+    this.platform.log.debug('ThermoHygroSensorPlus Constructor called');
+
+    this.temperatureSensor = this.accessory.getService(this.platform.Service.Thermostat)
       || this.accessory.addService(this.platform.Service.Thermostat);
 
-    this.humiditySensor = this.accessory.getService(this.platform.Service.HumiditySensor)
-      || this.accessory.addService(this.platform.Service.HumiditySensor);
-
-
-    this.temperatureSensorPlus.getCharacteristic(this.platform.Characteristic.CurrentHeatingCoolingState)
+    this.temperatureSensor.getCharacteristic(this.platform.Characteristic.CurrentHeatingCoolingState)
       .onGet(this.handleCurrentHeatingCoolingStateGet.bind(this));
 
-    this.temperatureSensorPlus.getCharacteristic(this.platform.Characteristic.TargetHeatingCoolingState)
+    this.temperatureSensor.getCharacteristic(this.platform.Characteristic.TargetHeatingCoolingState)
       .onGet(this.handleTargetHeatingCoolingStateGet.bind(this))
       .onSet(this.handleTargetHeatingCoolingStateSet.bind(this));
 
-    this.temperatureSensorPlus.getCharacteristic(this.platform.Characteristic.CurrentTemperature)
+    this.temperatureSensor.getCharacteristic(this.platform.Characteristic.CurrentTemperature)
       .onGet(this.handleCurrentTemperatureGet.bind(this));
+    //Ends here
 
-    this.temperatureSensorPlus.getCharacteristic(this.platform.Characteristic.TargetTemperature)
+    this.temperatureSensor.getCharacteristic(this.platform.Characteristic.TargetTemperature)
       .onGet(this.handleTargetTemperatureGet.bind(this))
       .onSet(this.handleTargetTemperatureSet.bind(this));
 
-    this.temperatureSensorPlus.getCharacteristic(this.platform.Characteristic.TemperatureDisplayUnits)
+    this.temperatureSensor.getCharacteristic(this.platform.Characteristic.TemperatureDisplayUnits)
       .onGet(this.handleTemperatureDisplayUnitsGet.bind(this))
       .onSet(this.handleTemperatureDisplayUnitsSet.bind(this));
+
 
   }
 
@@ -61,14 +61,16 @@ export class ThermoHygroSensorPlus extends EcowittAccessory {
     this.platform.log.debug('Triggered SET TargetHeatingCoolingState:', value);
   }
 
-  /**
+  /** &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+
+  /** ***************************************************************
    * Handle requests to get the current value of the "Current Temperature" characteristic
    */
   handleCurrentTemperatureGet() {
     this.platform.log.debug('Triggered GET CurrentTemperature');
 
     // set this to a valid value for CurrentTemperature
-    const currentValue = current_temp;
+    const currentValue = this.current_temp;
 
     return currentValue;
   }
@@ -81,7 +83,7 @@ export class ThermoHygroSensorPlus extends EcowittAccessory {
     this.platform.log.debug('Triggered GET TargetTemperature');
 
     // set this to a valid value for TargetTemperature
-    const currentValue = current_temp;
+    const currentValue = 20;
 
     return currentValue;
   }
@@ -125,11 +127,12 @@ export class ThermoHygroSensorPlus extends EcowittAccessory {
   }
 
   updateTemperature(tempf) {
-    this.updateCurrentTemperature(this.temperatureSensorPlus, tempf);
-    current_temp = Utils.toCelcius(tempf);
+    this.platform.log.debug('updateTemperature called:', Utils.toCelcius(tempf));
+    this.current_temp = Utils.toCelcius(tempf);
   }
 
   updateHumidity(humidity) {
-    this.updateCurrentRelativeHumidity(this.humiditySensor, humidity);
+    this.platform.log.debug('updateHumidity called:', parseFloat(humidity));
+    this.current_humidity = parseFloat(humidity);
   }
 }

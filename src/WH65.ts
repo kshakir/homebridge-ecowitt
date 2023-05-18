@@ -41,11 +41,11 @@ export class WH65 extends ThermoHygroSensor {
   protected totalRain: RainSensor | undefined;
 
   protected dewPoint: Service | undefined;
+  private readonly logLevel;
 
   constructor(
     protected readonly platform: EcowittPlatform,
     protected readonly accessory: PlatformAccessory,
-    private readonly logLevel,
   ) {
     super(platform, accessory);
 
@@ -92,7 +92,7 @@ export class WH65 extends ThermoHygroSensor {
     if (!this.platform.config.ws?.uv?.hide) {
       this.uvIndex = this.addOccupancySensor('UV Index');
 
-      platform.log.log(logLevel, 'uvThreshold:', this.uvThreshold);
+      platform.log.log(this.logLevel, 'uvThreshold:', this.uvThreshold);
     }
 
     // Wind
@@ -152,13 +152,13 @@ export class WH65 extends ThermoHygroSensor {
     // }
   }
 
-  update(dataReport, logLevel) {
-    this.platform.log.log(logLevel, 'WH65 Update');
-    this.platform.log.log(logLevel, '  wh65batt:', dataReport.wh65batt);
-    this.platform.log.log(logLevel, '  tempf:', dataReport.tempf);
-    this.platform.log.log(logLevel, '  humidity:', dataReport.humidity);
-    this.platform.log.log(logLevel, '  solarradiation:', dataReport.solarradiation);
-    this.platform.log.log(logLevel, '  uv:', dataReport.uv);
+  update(dataReport) {
+    this.platform.log.info('WH65 Update');
+    this.platform.log.debug('  wh65batt:', dataReport.wh65batt);
+    this.platform.log.debug('  tempf:', dataReport.tempf);
+    this.platform.log.debug('  humidity:', dataReport.humidity);
+    this.platform.log.debug('  solarradiation:', dataReport.solarradiation);
+    this.platform.log.debug('  uv:', dataReport.uv);
 
     const winddir = parseFloat(dataReport.winddir);
     const windspeedmph = parseFloat(dataReport.windspeedmph);
@@ -166,19 +166,19 @@ export class WH65 extends ThermoHygroSensor {
     const maxdailygust = parseFloat(dataReport.maxdailygust);
 
 
-    this.platform.log.log(logLevel, '  winddir:', winddir);
-    this.platform.log.log(logLevel, '  windspeedmph:', windspeedmph);
-    this.platform.log.log(logLevel, '  windgustmph:', windgustmph);
-    this.platform.log.log(logLevel, '  maxdailygust:', maxdailygust);
+    this.platform.log.debug('  winddir:', winddir);
+    this.platform.log.debug('  windspeedmph:', windspeedmph);
+    this.platform.log.debug('  windgustmph:', windgustmph);
+    this.platform.log.debug('  maxdailygust:', maxdailygust);
 
-    this.platform.log.log(logLevel, '  rainratein:', dataReport.rainratein);
-    this.platform.log.log(logLevel, '  eventrainin:', dataReport.eventrainin);
-    this.platform.log.log(logLevel, '  hourlyrainin:', dataReport.hourlyrainin);
-    this.platform.log.log(logLevel, '  dailyrainin:', dataReport.dailyrainin);
-    this.platform.log.log(logLevel, '  weeklyrainin:', dataReport.weeklyrainin);
-    this.platform.log.log(logLevel, '  monthlyrainin:', dataReport.monthlyrainin);
-    this.platform.log.log(logLevel, '  yearlyrainin:', dataReport.yearlyrainin);
-    this.platform.log.log(logLevel, '  totalrainin:', dataReport.totalrainin);
+    this.platform.log.debug('  rainratein:', dataReport.rainratein);
+    this.platform.log.debug('  eventrainin:', dataReport.eventrainin);
+    this.platform.log.debug('  hourlyrainin:', dataReport.hourlyrainin);
+    this.platform.log.debug('  dailyrainin:', dataReport.dailyrainin);
+    this.platform.log.debug('  weeklyrainin:', dataReport.weeklyrainin);
+    this.platform.log.debug('  monthlyrainin:', dataReport.monthlyrainin);
+    this.platform.log.debug('  yearlyrainin:', dataReport.yearlyrainin);
+    this.platform.log.debug('  totalrainin:', dataReport.totalrainin);
 
     this.updateStatusActive(this.temperatureSensor, true);
     this.updateStatusActive(this.humiditySensor, true);

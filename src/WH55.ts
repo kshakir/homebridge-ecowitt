@@ -30,13 +30,13 @@ export class WH55 extends EcowittAccessory {
     this.battery = this.addBattery(this.name);
   }
 
-  update(dataReport, logLevel) {
+  update(dataReport) {
     const leakbatt = dataReport[`leakbatt${this.channel}`];
     const leak = dataReport[`leak_ch${this.channel}`];
 
-    this.platform.log.log(logLevel, `WH55 Channel ${this.channel} Update`);
-    this.platform.log.log(logLevel, '  leakbatt:', leakbatt);
-    this.platform.log.log(logLevel, '  leak:', leak);
+    this.platform.log.info(`WH55 Channel ${this.channel} Update`);
+    this.platform.log.debug('  leakbatt:', leakbatt);
+    this.platform.log.debug('  leak:', leak);
 
     //this.setStatusActive(this.leakSensor, true);
 
