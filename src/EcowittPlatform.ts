@@ -108,7 +108,6 @@ export class EcowittPlatform implements DynamicPlatformPlugin
   }
 
   //----------------------------------------------------------------------------
-
   public serviceUuid(name: string)
   {
     const serviceId = this.config.mac + '_' + name;

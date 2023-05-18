@@ -96,8 +96,6 @@ export class ThermostatSensor
     this.platform.log.debug('Triggered SET TargetHeatingCoolingState:', value);
   }
 
-  /** &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
-
   /** ***************************************************************
    * Handle requests to get the current value of the "Current Temperature" characteristic
    */
@@ -112,8 +110,8 @@ export class ThermostatSensor
   handleCurrentHumidityGet()
   {
     this.platform.log.debug('Triggered GET CurrentHumidity');
-    // set this to a valid value for CurrentTemperature
-    const currentValue = this.current_temp;
+    // set this to a valid value for CurrentHumidity
+    const currentValue = this.current_humidity;
     return currentValue;
   }
 
