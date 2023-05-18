@@ -32,6 +32,13 @@
         "required": true,
         "default": false,
         "description": "Will add thermostat tiles to main home screen"
+      },
+      "unregister": {
+        "title": "Unregisters accessories, forcing new registrations",
+        "type": "boolean",
+        "required": true,
+        "default": false,
+        "description": "Removes existing accessories and reregisters with defaults (only enable when you're sure this is what you want)"
       },      
         "ws": {
         "type": "object",
