@@ -5,28 +5,25 @@ import { EcowittAccessory } from './EcowittAccessory';
 import { ContactSensor } from './ContactSensor';
 import { OccupancySensor } from './OccupancySensor';
 
-export class WH57 extends EcowittAccessory {
+export class WH57 extends EcowittAccessory
+{
   protected battery: Service;
   protected events: ContactSensor;
   protected timeDistance: OccupancySensor;
 
-  constructor(
-    protected readonly platform: EcowittPlatform,
-    protected readonly accessory: PlatformAccessory,
-  ) {
+  constructor(protected readonly platform: EcowittPlatform, protected readonly accessory: PlatformAccessory)
+  {
     super(platform, accessory);
 
-    this.setModel(
-      'WH57',
-      'Lightning Detector Sensor');
+    this.setModel('WH57', 'Lightning Detector Sensor');
 
     this.events = new ContactSensor(platform, accessory, 'Events');
     this.timeDistance = new OccupancySensor(platform, accessory, 'Time/Distance');
     this.battery = this.addBattery('⚡');
   }
 
-  update(dataReport) {
-
+  update(dataReport)
+  {
     this.platform.log.info('WH57 Update');
     this.platform.log.debug('  wh57batt:', dataReport.wh57batt);
     this.platform.log.debug('  lightning:', dataReport.lightning);
@@ -57,7 +54,8 @@ export class WH57 extends EcowittAccessory {
 
     let timeText = '';
 
-    if (lightningTime > 0) {
+    if (lightningTime > 0)
+    {
       const ms = lightningTime;
       let s = Math.floor(ms / 1000);
       let m = Math.floor(s / 60);
@@ -68,37 +66,46 @@ export class WH57 extends EcowittAccessory {
       h = h % 24;
 
       // eslint-disable-next-line no-inner-declarations
-      function appendTime(text: string) {
-        if (timeText) {
+      function appendTime(text: string)
+      {
+        if (timeText)
+        {
           timeText += ',';
         }
-
         timeText += text;
       }
 
-      if (d > 1) {
+      if (d > 1)
+      {
         appendTime(`${d} days`);
-      } else if (d || h || m) {
-        if (d) {
+      }
+      else if (d || h || m)
+      {
+        if (d)
+        {
           appendTime(d > 1 ? `${d} days` : '1 day');
         }
-        if (h) {
+        if (h)
+        {
           appendTime(h > 1 ? `${h} hours` : '1 hour');
         }
-        if (m) {
+        if (m)
+        {
           appendTime(m > 1 ? `${m} minutes` : '1 minute');
         }
-      } else if (s) {
+      }
+      else if (s)
+      {
         appendTime(s > 1 ? `${s} seconds` : '1 second');
       }
-
       timeText += ' ago';
     }
 
     let distanceUnits = '';
     let distance = 0;
 
-    switch (this.platform.config.lightning.units) {
+    switch (this.platform.config.lightning.units)
+    {
       case 'mi':
         distance = Math.round(dataReport.lightning / 1.609 * 10) / 10;
         distanceUnits = 'mi';

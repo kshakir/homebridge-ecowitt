@@ -3,21 +3,19 @@ import { EcowittPlatform } from './EcowittPlatform';
 import { EcowittAccessory } from './EcowittAccessory';
 
 
-export class WH51 extends EcowittAccessory {
+export class WH51 extends EcowittAccessory
+{
   protected battery: Service;
   protected soilMoistureSensor: Service;
   protected name: string;
 
-  constructor(
-    protected readonly platform: EcowittPlatform,
-    protected readonly accessory: PlatformAccessory,
-    protected readonly channel: number,
-  ) {
+  constructor(protected readonly platform: EcowittPlatform,
+              protected readonly accessory: PlatformAccessory,
+              protected readonly channel: number)
+  {
     super(platform, accessory);
 
-    this.setModel(
-      'WH51',
-      'Wireless Soil Moisture Sensor');
+    this.setModel('WH51', 'Wireless Soil Moisture Sensor');
     this.setSerialNumber(`CH${this.channel}`);
 
     this.name = this.platform.config?.soil?.[`name${this.channel}`] || `CH${this.channel} Soil Moisture`;
@@ -31,7 +29,8 @@ export class WH51 extends EcowittAccessory {
     this.setStatusActive(this.soilMoistureSensor, false);
   }
 
-  update(dataReport) {
+  update(dataReport)
+  {
     const soilbatt = dataReport[`soilbatt${this.channel}`];
     const soilmoisture = dataReport[`soilmoisture${this.channel}`];
 

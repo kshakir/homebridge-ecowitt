@@ -3,22 +3,20 @@ import { EcowittPlatform } from './EcowittPlatform';
 import { EcowittAccessory } from './EcowittAccessory';
 
 
-export class WH41 extends EcowittAccessory {
+export class WH41 extends EcowittAccessory
+{
   protected battery: Service;
   protected airQualitySensor: Service;
   protected airQualitySensor24H: Service;
   protected name: string;
 
-  constructor(
-    protected readonly platform: EcowittPlatform,
-    protected readonly accessory: PlatformAccessory,
-    protected readonly channel: number,
-  ) {
+  constructor(protected readonly platform: EcowittPlatform,
+              protected readonly accessory: PlatformAccessory,
+              protected readonly channel: number)
+  {
     super(platform, accessory);
 
-    this.setModel(
-      'WH41',
-      'Wireless PM2.5 Air Quality Sensor');
+    this.setModel('WH41', 'Wireless PM2.5 Air Quality Sensor');
     this.setSerialNumber(`CH${this.channel}`);
 
     this.name = this.platform.config?.pm25?.[`name${this.channel}`] || `CH${this.channel} PM2.5`;
@@ -31,12 +29,8 @@ export class WH41 extends EcowittAccessory {
 
     const name24H = this.name + ' 24H Average';
 
-    this.airQualitySensor24H =
-    this.accessory.getService(name24H)
-    || this.accessory.addService(
-      this.platform.Service.AirQualitySensor,
-      name24H,
-      this.platform.serviceUuid(name24H));
+    this.airQualitySensor24H = this.accessory.getService(name24H) ||
+      this.accessory.addService(this.platform.Service.AirQualitySensor, name24H, this.platform.serviceUuid(name24H));
 
     this.setName(this.airQualitySensor24H, name24H);
     this.setStatusActive(this.airQualitySensor24H, false);
@@ -67,24 +61,17 @@ export class WH41 extends EcowittAccessory {
     this.updateStatusLowBattery(this.battery, lowBattery);
     this.updateStatusLowBattery(this.airQualitySensor, lowBattery);
 
-    this.airQualitySensor.updateCharacteristic(
-      this.platform.Characteristic.PM2_5Density,
-      pm25);
+    this.airQualitySensor.updateCharacteristic( this.platform.Characteristic.PM2_5Density, pm25);
 
-    this.airQualitySensor.updateCharacteristic(
-      this.platform.Characteristic.AirQuality,
-      this.airQuality(pm25));
+    this.airQualitySensor.updateCharacteristic( this.platform.Characteristic.AirQuality, this.airQuality(pm25));
 
-    this.airQualitySensor24H.updateCharacteristic(
-      this.platform.Characteristic.PM2_5Density,
-      pm25_avg_24h);
+    this.airQualitySensor24H.updateCharacteristic(this.platform.Characteristic.PM2_5Density, pm25_avg_24h);
 
-    this.airQualitySensor24H.updateCharacteristic(
-      this.platform.Characteristic.AirQuality,
-      this.airQuality(pm25_avg_24h));
+    this.airQualitySensor24H.updateCharacteristic(this.platform.Characteristic.AirQuality, this.airQuality(pm25_avg_24h));
   }
 
-  airQuality(pm25: number) {
+  airQuality(pm25: number)
+  {
     return pm25 < 5
       ? this.platform.Characteristic.AirQuality.EXCELLENT
       : pm25 <= 10

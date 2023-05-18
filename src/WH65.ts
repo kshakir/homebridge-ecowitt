@@ -11,7 +11,8 @@ import { RainSensor } from './RainSensor';
 
 // https://en.wikipedia.org/wiki/Ultraviolet_index
 
-const uvInfos = [
+const uvInfos =
+[
   { level: 0, risk: 'Low' },
   { level: 3, risk: 'Moderate' },
   { level: 6, risk: 'High' },
@@ -21,7 +22,8 @@ const uvInfos = [
 
 //------------------------------------------------------------------------------
 
-export class WH65 extends ThermoHygroSensor {
+export class WH65 extends ThermoHygroSensor
+{
   protected solarRadiation!: Service;
   protected uvIndex!: Service;
   protected uvThreshold: number;
@@ -43,22 +45,19 @@ export class WH65 extends ThermoHygroSensor {
   protected dewPoint: Service | undefined;
   private readonly logLevel;
 
-  constructor(
-    protected readonly platform: EcowittPlatform,
-    protected readonly accessory: PlatformAccessory,
-  ) {
+  constructor(protected readonly platform: EcowittPlatform, protected readonly accessory: PlatformAccessory)
+  {
     super(platform, accessory);
 
-    this.setModel(
-      'WH65',
-      'Solar Powererd 7-in-1 Outdoor Sensor');
+    this.setModel('WH65', 'Solar Powererd 7-in-1 Outdoor Sensor');
 
     this.setName(this.temperatureSensor, 'Outdoor Temperature');
     this.setName(this.humiditySensor, 'Outdoor Humidity');
 
     // Dew point
 
-    if (!this.platform.config.ws?.dewpoint?.hide) {
+    if (!this.platform.config.ws?.dewpoint?.hide)
+    {
       const nameDP = 'Dew Point';
       this.dewPoint = this.accessory.getService(nameDP)
       || this.accessory.addService(
@@ -71,7 +70,8 @@ export class WH65 extends ThermoHygroSensor {
 
     // Solar Radiation
 
-    if (!this.platform.config.ws?.solarradiation?.hide) {
+    if (!this.platform.config.ws?.solarradiation?.hide)
+    {
       this.solarRadiation = this.accessory.getService(this.platform.Service.LightSensor)
       || this.accessory.addService(this.platform.Service.LightSensor);
 
@@ -89,7 +89,8 @@ export class WH65 extends ThermoHygroSensor {
 
     this.uvThreshold = this.platform.config?.ws?.uv?.threshold ?? 6;
 
-    if (!this.platform.config.ws?.uv?.hide) {
+    if (!this.platform.config.ws?.uv?.hide)
+    {
       this.uvIndex = this.addOccupancySensor('UV Index');
 
       platform.log.log(this.logLevel, 'uvThreshold:', this.uvThreshold);
@@ -99,19 +100,23 @@ export class WH65 extends ThermoHygroSensor {
 
     const windHide = this.platform.config?.ws?.wind?.hide || [];
 
-    if (!windHide.includes('Direction')) {
+    if (!windHide.includes('Direction'))
+    {
       this.windDirection = new WindSensor(platform, accessory, 'Wind Direction');
     }
 
-    if (!windHide.includes('Speed')) {
+    if (!windHide.includes('Speed'))
+    {
       this.windSpeed = new WindSensor(platform, accessory, 'Wind Speed');
     }
 
-    if (!windHide.includes('Gust')) {
+    if (!windHide.includes('Gust'))
+    {
       this.windGust = new WindSensor(platform, accessory, 'Wind Gust');
     }
 
-    if (!windHide.includes('MaxDailyGust')) {
+    if (!windHide.includes('MaxDailyGust'))
+    {
       this.maxDailyGust = new WindSensor(platform, accessory, 'Max Daily Gust');
     }
 
@@ -119,31 +124,38 @@ export class WH65 extends ThermoHygroSensor {
 
     const rainHide = this.platform.config?.ws?.rain?.hide || [];
 
-    if (!rainHide.includes('Rate')) {
+    if (!rainHide.includes('Rate'))
+    {
       this.rainRate = new RainSensor(platform, accessory, 'Rain Rate');
     }
 
-    if (!rainHide.includes('Event')) {
+    if (!rainHide.includes('Event'))
+    {
       this.eventRain = new RainSensor(platform, accessory, 'Event Rain');
     }
 
-    if (!rainHide.includes('Hourly')) {
+    if (!rainHide.includes('Hourly'))
+    {
       this.hourlyRain = new RainSensor(platform, accessory, 'Hourly Rain');
     }
 
-    if (!rainHide.includes('Daily')) {
+    if (!rainHide.includes('Daily'))
+    {
       this.dailyRain = new RainSensor(platform, accessory, 'Daily Rain');
     }
 
-    if (!rainHide.includes('Weekly')) {
+    if (!rainHide.includes('Weekly'))
+    {
       this.weeklyRain = new RainSensor(platform, accessory, 'Weekly Rain');
     }
 
-    if (!rainHide.includes('Monthly')) {
+    if (!rainHide.includes('Monthly'))
+    {
       this.monthlyRain = new RainSensor(platform, accessory, 'Monthly Rain');
     }
 
-    if (!rainHide.includes('Yearly')) {
+    if (!rainHide.includes('Yearly'))
+    {
       this.yearlyRain = new RainSensor(platform, accessory, 'Yearly Rain');
     }
 
@@ -152,7 +164,8 @@ export class WH65 extends ThermoHygroSensor {
     // }
   }
 
-  update(dataReport) {
+  update(dataReport)
+  {
     this.platform.log.info('WH65 Update');
     this.platform.log.debug('  wh65batt:', dataReport.wh65batt);
     this.platform.log.debug('  tempf:', dataReport.tempf);
@@ -191,20 +204,20 @@ export class WH65 extends ThermoHygroSensor {
     this.updateHumidity(dataReport.humidity);
     this.updateStatusLowBattery(this.humiditySensor, lowBattery);
 
-    if (this.solarRadiation) {
+    if (this.solarRadiation)
+    {
       const wm2 = parseFloat(dataReport.solarradiation);
       const luxFactor = this.platform.config.ws.solarradiation?.luxFactor ?? 126.7;
       const lux = Math.round(wm2 * luxFactor * 10) / 10;
 
       this.updateStatusActive(this.solarRadiation, true);
       this.updateName(this.solarRadiation, `Solar Radiation: ${wm2} W/m²`);
-      this.solarRadiation.updateCharacteristic(
-        this.platform.Characteristic.CurrentAmbientLightLevel,
-        lux);
+      this.solarRadiation.updateCharacteristic(this.platform.Characteristic.CurrentAmbientLightLevel, lux);
       this.updateStatusLowBattery(this.solarRadiation, lowBattery);
     }
 
-    if (this.uvIndex) {
+    if (this.uvIndex)
+    {
       const uv = parseInt(dataReport.uv);
 
       this.updateStatusActive(this.uvIndex, true);
@@ -232,7 +245,8 @@ export class WH65 extends ThermoHygroSensor {
 
     // Dew point
 
-    if (this.dewPoint) {
+    if (this.dewPoint)
+    {
       const t = Utils.toCelcius(dataReport.tempf);
       const rh = parseFloat(dataReport.humidity);
       const dp = Math.pow(rh/100, 1/8) * (112+(0.9*t)) + 0.1*t-112;
@@ -243,15 +257,17 @@ export class WH65 extends ThermoHygroSensor {
     }
   }
 
-  toRisk(uvIndex) {
+  toRisk(uvIndex)
+  {
     let uvInfo = uvInfos[0];
 
-    for (let i = 1; i < uvInfos.length; i++) {
-      if (uvIndex >= uvInfos[i].level) {
+    for (let i = 1; i < uvInfos.length; i++)
+    {
+      if (uvIndex >= uvInfos[i].level)
+      {
         uvInfo = uvInfos[i];
       }
     }
-
     return uvInfo.risk;
   }
 }

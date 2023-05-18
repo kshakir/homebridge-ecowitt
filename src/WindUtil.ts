@@ -142,25 +142,29 @@ const kBeaufortScale = [
 
 //------------------------------------------------------------------------------
 
-export function toKts(mph): number {
+export function toKts(mph): number
+{
   return parseFloat(mph) * 0.86897624;
 }
 
 //------------------------------------------------------------------------------
 
-export function toKmh(mph): number {
+export function toKmh(mph): number
+{
   return parseFloat(mph) * 1.609344;
 }
 
 //------------------------------------------------------------------------------
 
-export function toMps(mph): number {
+export function toMps(mph): number
+{
   return parseFloat(mph) * 0.44704;
 }
 
 //------------------------------------------------------------------------------
 
-export function toBeafort(mph): Beaufort {
+export function toBeafort(mph): Beaufort
+{
   mph = parseFloat(mph);
 
   let beaufort = kBeaufortScale.find(scale => mph <= scale.mph);
@@ -168,17 +172,17 @@ export function toBeafort(mph): Beaufort {
   if (!beaufort) {
     beaufort = kBeaufortScale[kBeaufortScale.length - 1];
   }
-
   return beaufort;
 }
 
 //------------------------------------------------------------------------------
 
-export function toSector(degrees): string {
-  if (typeof degrees !== 'number' || isNaN(degrees)) {
+export function toSector(degrees): string
+{
+  if (typeof degrees !== 'number' || isNaN(degrees))
+  {
     return 'Unkown';
   }
-
   const index = Math.round(degrees % 360 / 22.5);
 
   let sectorName = kSectors[index];

@@ -15,9 +15,9 @@ import { WH65 } from './WH65';
 
 import * as restify from 'restify';
 import * as crypto from 'crypto';
-import * as fs from 'fs';
 
-interface BaseStationInfo {
+interface BaseStationInfo
+{
   model: string;
   deviceName: string;
   serialNumber: string;
@@ -35,7 +35,6 @@ interface BaseStationInfo {
  * This class is the main constructor for your plugin, this is where you should
  * parse the user config and discover/register accessories with Homebridge.
  */
-
 export class EcowittPlatform implements DynamicPlatformPlugin
 {
   public readonly Service: typeof Service = this.api.hap.Service;
@@ -96,22 +95,10 @@ export class EcowittPlatform implements DynamicPlatformPlugin
 
     this.api.on('didFinishLaunching', () =>
     {
-      const path = '/var/lib/homebridge/node_modules/@bzwan/homebridge-ecowitt/new.txt';
-
-      fs.access(path, fs.constants.F_OK, (err) =>
+      if (this.config.unregister)
       {
-        if (err)
-        {
-          this.log.info(`File ${path} does not exist`);
-          this.log.info('EcoWitt Removing accesories');
-          this.unregisterAccessories();
-          fs.writeFileSync(path, 'blaah');
-        }
-        else
-        {
-          this.log.info(`File ${path} exists`);
-        }
-      });
+        this.unregisterAccessories();
+      }
 
       this.dataReportServer.listen(this.config.port, () =>
       {
@@ -119,7 +106,6 @@ export class EcowittPlatform implements DynamicPlatformPlugin
       });
     });
   }
-
 
   //----------------------------------------------------------------------------
 
@@ -322,9 +308,7 @@ export class EcowittPlatform implements DynamicPlatformPlugin
         // create a new sensor accessory
         const accessory = new this.api.platformAccessory(sensor.type, uuid);
         this.CreateAccesory(sensor, accessory);
-        // the accessory does not yet exist, so we need to create it
         this.log.info('Adding new accessory type:', sensor.type, 'channel:', sensor.channel);
-
         // link the sensor accessory to the platform
         this.api.registerPlatformAccessories(PLUGIN_NAME, PLATFORM_NAME, [accessory]);
       }
@@ -355,14 +339,14 @@ export class EcowittPlatform implements DynamicPlatformPlugin
       case 'WH31Thermostat':
         if (this.config.showasthermostat)
         {
-          sensor.accessory = new ThermostatSensor(this, accessory, sensor.channel);//Changed BZ
+          sensor.accessory = new ThermostatSensor(this, accessory, sensor.channel);
         }
         break;
 
       case 'GW1100AThermostat':
         if (this.config.showasthermostat)
         {
-          sensor.accessory = new ThermostatSensor(this, accessory, 1100);//Changed BZ
+          sensor.accessory = new ThermostatSensor(this, accessory, 1100);
         }
         break;
 

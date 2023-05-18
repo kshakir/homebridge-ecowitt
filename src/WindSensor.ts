@@ -6,36 +6,35 @@ import * as WindUtil from './WindUtil.js';
 
 //------------------------------------------------------------------------------
 
-export class WindSensor extends MotionSensor {
-
-  constructor(
-    protected readonly platform: EcowittPlatform,
-    protected readonly accessory: PlatformAccessory,
-    protected readonly name: string,
-  ) {
-
+export class WindSensor extends MotionSensor
+{
+  constructor(protected readonly platform: EcowittPlatform,
+              protected readonly accessory: PlatformAccessory,
+              protected readonly name: string)
+  {
     super(platform, accessory, name);
   }
 
   //----------------------------------------------------------------------------
 
-  public updateDirection(winddir: number) {
-
-    if (!isFinite(winddir)) {
+  public updateDirection(winddir: number)
+  {
+    if (!isFinite(winddir))
+    {
       this.updateStatusActive(false);
       this.updateName('N/A');
       return;
     }
-
     this.updateStatusActive(true);
     this.updateName(`${this.name}: ${winddir}° ${WindUtil.toSector(winddir)}`);
   }
 
   //----------------------------------------------------------------------------
 
-  public updateSpeed(windspeedmph: number, threshold: number) {
-
-    if (!isFinite(windspeedmph)) {
+  public updateSpeed(windspeedmph: number, threshold: number)
+  {
+    if (!isFinite(windspeedmph))
+    {
       this.updateStatusActive(false);
       this.updateName('N/A');
       return;
@@ -45,7 +44,8 @@ export class WindSensor extends MotionSensor {
 
     let speed: string;
 
-    switch (this.platform.config?.ws?.wind?.units) {
+    switch (this.platform.config?.ws?.wind?.units)
+    {
       case 'kts':
         speed = `${Math.round(windspeedmph * 86.897624) / 100} Kts`;
         break;
