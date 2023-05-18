@@ -23,10 +23,17 @@
         "title": "Path",
         "type": "string",
         "required": true,
-        "default": "/data/report",
+        "default": "/data/report/",
         "description": "Host path which will receive data reports"
       },
-      "ws": {
+      "showasthermostat": {
+        "title": "Show temperature as fake thermostat tile",
+        "type": "boolean",
+        "required": true,
+        "default": false,
+        "description": "Will add thermostat tiles to main home screen"
+      },      
+        "ws": {
         "type": "object",
         "properties": {
           "hide": {
