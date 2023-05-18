@@ -1,8 +1,11 @@
 
 # Ecowitt Sensors Homebridge Plugin
 
-**NOTE: This is a fork of [homebridge-ecowitt](https://github.com/bzwan/homebridge-ecowitt) that adds the following functionality:**
+**NOTE: This is a fork of [homebridge-ecowitt](https://github.com/C0nquistadore/homebridge-ecowitt) that adds the following functionality:**
 - Creates a thermostat tile for temperature sensors so they show up as a seperate tile in Homekit.
+- Adds an option in the config for showing these tiles.
+- Fixed an issue in the EcowittPlatform where the exisiting accessory was ignored.
+- Made curly braces start on newline (sorry, I couldn't help it).
 
 A Homebridge plugin providing support for a wide range of **Ecowitt** sensors.
 
