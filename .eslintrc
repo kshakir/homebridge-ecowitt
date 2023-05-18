@@ -20,7 +20,7 @@
     "dot-notation": "off",
     "eqeqeq": "warn",
     "curly": ["warn", "all"],
-    "brace-style": ["warn"],
+    //"brace-style": ["warn"],
     "prefer-arrow-callback": ["warn"],
     "max-len": ["warn", 140],
     "no-console": ["warn"], // use the provided Homebridge log method instead
