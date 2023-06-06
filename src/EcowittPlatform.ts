@@ -3,9 +3,10 @@ import { API, DynamicPlatformPlugin, Logger, PlatformAccessory, PlatformConfig, 
 import { PLATFORM_NAME, PLUGIN_NAME } from './settings';
 
 import { GW1000 } from './GW1000';
-import { GW1100A } from './GW1100A';
+import { GW1100 } from './GW1100';
 import { WH25 } from './WH25';
 import { WH31 } from './WH31';
+import { WH32 } from './WH32';
 import { ThermostatSensor } from './ThermostatSensor';
 import { WH41 } from './WH41';
 import { WH51 } from './WH51';
@@ -62,18 +63,18 @@ export class EcowittPlatform implements DynamicPlatformPlugin
     sensors: [],
   };
 
-  constructor(public readonly log: Logger,
-              public readonly config: PlatformConfig,
-              public readonly api: API)
+  constructor(public readonly log: Logger, public readonly config: PlatformConfig, public readonly api: API)
   {
 
     this.log.info('Storage path:', this.api.user.storagePath());
     this.log.info('config:', JSON.stringify(this.config, undefined, 2));
 
     this.log.info('Creating data report service');
+    this.log.info('  MAC:', this.config.mac);
     this.log.info('  Port:', this.config.port);
     this.log.info('  Path:', this.config.path);
     this.log.info('  ShowAsThermostat:', this.config.showasthermostat);
+    this.log.info('  Unregister:', this.config.unregister);
 
     this.dataReportServer = restify.createServer();
     this.dataReportServer.use(restify.plugins.bodyParser());
@@ -189,8 +190,8 @@ export class EcowittPlatform implements DynamicPlatformPlugin
   //----------------------------------------------------------------------------
   registerAccessories(dataReport)
   {
-    const stationTypeInfo = dataReport?.stationtype.match(/(EasyWeather|GW1000|GW1100A)_?(.*)/);
-    const modelInfo = dataReport?.model.match(/(HP2551CA|GW1000|GW1100A)(_(.*))?/);
+    const stationTypeInfo = dataReport?.stationtype.match(/(EasyWeather|GW1000|GW1100)_?(.*)/);
+    const modelInfo = dataReport?.model.match(/(HP2551CA|GW1000|GW1100)(_(.*))?/);
 
     this.log.info('stationTypeInfo:', JSON.stringify(stationTypeInfo));
     this.log.info('modelInfo:', JSON.stringify(modelInfo));
@@ -206,7 +207,7 @@ export class EcowittPlatform implements DynamicPlatformPlugin
 
     if (Array.isArray(modelInfo))
     {
-      switch (modelInfo[1])
+      switch ((modelInfo[1]).substr(0, 6))//compare against first 6 chars
       {
         case 'GW1000':
           this.baseStationInfo.hardwareRevision = dataReport.stationtype;
@@ -217,20 +218,20 @@ export class EcowittPlatform implements DynamicPlatformPlugin
           }
           break;
 
-        case 'GW1100A':
+        case 'GW1100'://'GW1100A'
           this.baseStationInfo.hardwareRevision = dataReport.stationtype;
           this.baseStationInfo.firmwareRevision = stationTypeInfo[2];
           if (!this.config?.thbin?.hide)
           {
-            this.addSensorType(true, 'GW1100A');
+            this.addSensorType(true, 'GW1100');
             if (this.config.showasthermostat)
             {
-              this.addSensorType(true, 'GW1100AThermostat');
+              this.addSensorType(true, 'GW1100Thermostat');
             }
           }
           break;
 
-        case 'HP2551CA':
+        case 'HP2551'://'HP2551CA'
           this.baseStationInfo.softwareRevision = dataReport.stationtype;
           this.baseStationInfo.firmwareRevision = modelInfo[2];
           break;
@@ -254,6 +255,15 @@ export class EcowittPlatform implements DynamicPlatformPlugin
         {
           this.addSensorType(dataReport[`batt${channel}`] !== undefined, 'WH31Thermostat', (channel));
         }
+      }
+    }
+
+    if (!this.config?.thod?.hide)
+    {
+      this.addSensorType(dataReport.wh26batt !== undefined, 'WH32');
+      if (this.config.showasthermostat)
+      {
+        this.addSensorType(dataReport.wh26batt !== undefined, 'WH32Thermostat');
       }
     }
 
@@ -323,8 +333,15 @@ export class EcowittPlatform implements DynamicPlatformPlugin
         sensor.accessory = new GW1000(this, accessory);
         break;
 
-      case 'GW1100A':
-        sensor.accessory = new GW1100A(this, accessory);
+      case 'GW1100':
+        sensor.accessory = new GW1100(this, accessory);
+        break;
+
+      case 'GW1100Thermostat':
+        if (this.config.showasthermostat)
+        {
+          sensor.accessory = new ThermostatSensor(this, accessory, 1100);
+        }
         break;
 
       case 'WH25':
@@ -342,10 +359,14 @@ export class EcowittPlatform implements DynamicPlatformPlugin
         }
         break;
 
-      case 'GW1100AThermostat':
+      case 'WH32':
+        sensor.accessory = new WH32(this, accessory);
+        break;
+
+      case 'WH32Thermostat':
         if (this.config.showasthermostat)
         {
-          sensor.accessory = new ThermostatSensor(this, accessory, 1100);
+          sensor.accessory = new ThermostatSensor(this, accessory, 32);
         }
         break;
 

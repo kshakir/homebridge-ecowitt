@@ -1,6 +1,5 @@
 import { Service, PlatformAccessory } from 'homebridge';
 import { EcowittPlatform } from './EcowittPlatform';
-//import { EcowittAccessory } from './EcowittAccessory';
 import * as Utils from './Utils.js';
 
 // Temperature sensor that shows up as a fake Thermostat in homekit
