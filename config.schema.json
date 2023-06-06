@@ -10,6 +10,7 @@
         "type": "string",
         "pattern": "^([A-Fa-f0-9]{2}:){5}[A-Fa-f0-9]{2}$",
         "required": true,
+        "default" : "00:00:00:00",
         "description": "The MAC address of your console or gateway"
       },
       "port": {
@@ -27,20 +28,20 @@
         "description": "Host path which will receive data reports"
       },
       "showasthermostat": {
-        "title": "Show temperature as fake thermostat tile",
+        "title": "Fake thermostat",
         "type": "boolean",
         "required": true,
         "default": false,
-        "description": "Will add thermostat tiles to main home screen"
+        "description": "Adds fake thermostat tiles for temperature sensors"
       },
       "unregister": {
-        "title": "Unregisters accessories, forcing new registrations",
+        "title": "Unregister",
         "type": "boolean",
         "required": true,
         "default": false,
         "description": "Removes existing accessories and reregisters with defaults (only enable when you're sure this is what you want)"
       },      
-        "ws": {
+      "ws": {
         "type": "object",
         "properties": {
           "hide": {
@@ -284,6 +285,16 @@
           }
         }
       },
+      "thod": {
+        "type": "object",
+        "properties": {
+          "hide": {
+            "title": "Hide",
+            "type": "boolean",
+            "default": false
+          }
+        }
+      },
       "soil": {
         "type": "object",
         "properties": {
@@ -425,7 +436,9 @@
           "title": "Data Report Service",
           "items": [
             "port",
-            "path"
+            "path",
+            "showasthermostat",
+            "unregister"
           ]
         }
       ]
@@ -549,6 +562,15 @@
             "th.name8"
           ]
         }
+      ]
+    },
+    {
+      "type": "fieldset",
+      "expandable": true,
+      "expanded": false,
+      "title": "Outdoor Thermometer/Hygrometer Sensor",
+      "items": [
+        "thod.hide"
       ]
     },
     {

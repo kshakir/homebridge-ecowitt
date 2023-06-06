@@ -1,10 +1,11 @@
 
 # Ecowitt Sensors Homebridge Plugin
 
-**NOTE: This is a fork of [homebridge-ecowitt](https://github.com/C0nquistadore/homebridge-ecowitt) that adds the following functionality:**
-- Optionally creates (fake) thermostat tiles for temperature sensors so they show up as a seperate tile in Homekit.
-- Adds an option to the config to reregister the accessories.
-
+**NOTE: This is a fork of [homebridge-ecowitt](https://github.com/@conquistadore/homebridge-ecowitt) that adds the following functionality:**
+- Add WH32 support
+- Allows different versions of the GW1100 station
+- Creates a (fake) thermostat tile for temperature sensors so they show up as a seperate tile in Homekit.
+- Fixed an issue with existing accessories in the EcoWittPlatform
 
 A Homebridge plugin providing support for a wide range of **Ecowitt** sensors.
 
@@ -17,6 +18,9 @@ Features include -
 * Configurable display units
 
 ## Release Notes
+* 1.1.7
+  * Added support for WH32
+  * Added support for all types of GW1100 (A, B, C, etc.)
 
 * 1.1.5
   * Cloned from @conquistadore/homebridge-ecowitt v1.1.4 (2023-03-19)
