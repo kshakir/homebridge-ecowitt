@@ -1,0 +1,60 @@
+{
+    "bridge": {
+        "name": "Homebridge 131D",
+        "username": "0E:75:24:A5:13:1D",
+        "port": 51849,
+        "pin": "873-03-075",
+        "advertiser": "ciao"
+    },
+    "accessories": [],
+    "platforms": [
+        {
+            "mac": "7C:87:CE:BE:A8:35",
+            "port": 8081,
+            "path": "/data/report/",
+            "ws": {
+                "hide": false,
+                "uv": {
+                    "hide": false,
+                    "threshold": 6
+                },
+                "solarradiation": {
+                    "hide": false,
+                    "luxFactor": 126.7
+                },
+                "wind": {
+                    "units": "beaufort",
+                    "speedThreshold": 1,
+                    "gustThreshold": 3,
+                    "maxDailyGustThreshold": 8
+                },
+                "rain": {
+                    "units": "mm"
+                }
+            },
+            "thbin": {
+                "hide": false
+            },
+            "th": {
+                "hide": false
+            },
+            "soil": {
+                "hide": false
+            },
+            "leak": {
+                "hide": false
+            },
+            "pm25": {
+                "hide": false
+            },
+            "lightning": {
+                "hide": false,
+                "units": "km"
+            },
+            "platform": "Ecowitt"
+        }
+    ],
+    "disabledPlugins": [
+        "homebridge-ewthst"
+    ]
+}

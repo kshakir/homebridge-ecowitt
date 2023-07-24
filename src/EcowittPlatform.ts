@@ -13,6 +13,7 @@ import { WH51 } from './WH51';
 import { WH55 } from './WH55';
 import { WH57 } from './WH57';
 import { WH65 } from './WH65';
+import { WH90 } from './WH90';
 
 import * as restify from 'restify';
 import * as crypto from 'crypto';
@@ -242,6 +243,7 @@ export class EcowittPlatform implements DynamicPlatformPlugin
     if (!this.config?.ws?.hide)
     {
       this.addSensorType(dataReport.wh65batt !== undefined, 'WH65');
+      this.addSensorType(dataReport.wh90batt !== undefined, 'WH90');
     }
 
     this.addSensorType(dataReport.wh25batt !== undefined, 'WH25');
@@ -388,6 +390,10 @@ export class EcowittPlatform implements DynamicPlatformPlugin
 
       case 'WH65':
         sensor.accessory = new WH65(this, accessory);
+        break;
+
+      case 'WH90':
+        sensor.accessory = new WH90(this, accessory);
         break;
 
       default:
