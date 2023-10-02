@@ -1,7 +1,7 @@
 {
   "displayName": "Homebridge Ecowitt",
   "name": "@christocomm/homebridge-ecowitt",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Provides support for a wide range of Ecowitt sensors, using fake thermostat tiles for temperature.",
   "license": "Apache-2.0",
   "repository": {
