@@ -1,15 +1,15 @@
 {
   "displayName": "Homebridge Ecowitt",
-  "name": "@christocomm/homebridge-ecowitt",
-  "version": "1.2.1",
+  "name": "@kshakir/homebridge-ecowitt",
+  "version": "1.3.0",
   "description": "Provides support for a wide range of Ecowitt sensors, using fake thermostat tiles for temperature.",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "git://github.com/christocomm/homebridge-ecowitt.git"
+    "url": "git://github.com/kshakir/homebridge-ecowitt.git"
   },
   "bugs": {
-    "url": "https://github.com/christocomm/homebridge-ecowitt/issues"
+    "url": "https://github.com/kshakir/homebridge-ecowitt/issues"
   },
   "engines": {
     "node": ">=10.17.0",
@@ -42,6 +42,6 @@
     "typescript": "^4.2.2"
   },
   "types": "./dist/index.d.ts",
-  "homepage": "https://github.com/bzwan/homebridge-ecowitt#readme",
+  "homepage": "https://github.com/kshakir/homebridge-ecowitt#readme",
   "author": ""
 }

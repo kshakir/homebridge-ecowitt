@@ -16,13 +16,13 @@ export class WH32 extends ThermoHygroSensor
     this.setName(this.humiditySensor, 'Outdoor Humidity');
   }
 
-  update(dataReport)
+  update(dataReport, logLevel)
   {
     const batt = dataReport.wh26batt;
     const tempf = dataReport.tempf;
     const humidity = dataReport.humidity;
 
-    this.platform.log.info('WH32 Update');
+    this.platform.log.log(logLevel, 'WH32 Update');
     this.platform.log.debug('  batt:', batt);
     this.platform.log.debug('  tempf:', tempf);
     this.platform.log.debug('  humidity:', humidity);
@@ -38,4 +38,3 @@ export class WH32 extends ThermoHygroSensor
     this.updateStatusActive(this.humiditySensor, true);
   }
 }
-

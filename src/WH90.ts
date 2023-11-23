@@ -168,9 +168,9 @@ export class WH90 extends ThermoHygroSensor
   // Labels changed from WH65 to WH90
   //
 
-  update(dataReport)
+  update(dataReport, logLevel)
   {
-    this.platform.log.info('WH90 Update');
+    this.platform.log.log(logLevel, 'WH90 Update');
     this.platform.log.debug('  wh90batt:', dataReport.wh90batt);
     this.platform.log.debug('  tempf:', dataReport.tempf);
     this.platform.log.debug('  humidity:', dataReport.humidity);

@@ -164,9 +164,9 @@ export class WH65 extends ThermoHygroSensor
     // }
   }
 
-  update(dataReport)
+  update(dataReport, logLevel)
   {
-    this.platform.log.info('WH65 Update');
+    this.platform.log.log(logLevel, 'WH65 Update');
     this.platform.log.debug('  wh65batt:', dataReport.wh65batt);
     this.platform.log.debug('  tempf:', dataReport.tempf);
     this.platform.log.debug('  humidity:', dataReport.humidity);

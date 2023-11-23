@@ -34,6 +34,13 @@
         "default": false,
         "description": "Adds fake thermostat tiles for temperature sensors"
       },
+      "updatelogleveldebug": {
+        "title": "Log updates as debug",
+        "type": "boolean",
+        "required": true,
+        "default": false,
+        "description": "After initialization, only log updates at the debug level"
+      },
       "unregister": {
         "title": "Unregister",
         "type": "boolean",
@@ -438,6 +445,7 @@
             "port",
             "path",
             "showasthermostat",
+            "updatelogleveldebug",
             "unregister"
           ]
         }

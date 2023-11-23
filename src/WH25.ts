@@ -15,9 +15,9 @@ export class WH25 extends ThermoHygroBaroSensor
     this.setName(this.humiditySensor, 'Indoor Humidity');
   }
 
-  update(dataReport)
+  update(dataReport, logLevel)
   {
-    this.platform.log.info('WH25 Update');
+    this.platform.log.log(logLevel, 'WH25 Update');
     this.platform.log.debug('  wh25batt:', dataReport.wh25batt);
     this.platform.log.debug('  tempinf:', dataReport.tempinf);
     this.platform.log.debug('  humidityin:', dataReport.humidityin);
@@ -39,4 +39,3 @@ export class WH25 extends ThermoHygroBaroSensor
     this.relativePressureSensor.updateStatusLowBattery(lowBattery);
   }
 }
-

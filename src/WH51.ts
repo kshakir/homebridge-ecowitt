@@ -29,12 +29,12 @@ export class WH51 extends EcowittAccessory
     this.setStatusActive(this.soilMoistureSensor, false);
   }
 
-  update(dataReport)
+  update(dataReport, logLevel)
   {
     const soilbatt = dataReport[`soilbatt${this.channel}`];
     const soilmoisture = dataReport[`soilmoisture${this.channel}`];
 
-    this.platform.log.info(`WH51 Channel ${this.channel} Update`);
+    this.platform.log.log(logLevel, `WH51 Channel ${this.channel} Update`);
     this.platform.log.debug('  soilbatt:', soilbatt);
     this.platform.log.debug('  soilmoisture:', soilmoisture);
 

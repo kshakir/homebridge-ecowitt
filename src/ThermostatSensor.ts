@@ -52,7 +52,7 @@ export class ThermostatSensor
       .onSet(this.handleTemperatureDisplayUnitsSet.bind(this));
   }
 
-  update(dataReport)
+  update(dataReport, logLevel)
   {
     let tempc = 0;
     let humidity = 0;
@@ -67,7 +67,7 @@ export class ThermostatSensor
       tempc = Utils.toCelcius(dataReport[`temp${this.channel}f`]);
       humidity = dataReport[`humidity${this.channel}`];
     }
-    this.platform.log.info(`Thermostat Channel ${this.channel} Update`);
+    this.platform.log.log(logLevel, `Thermostat Channel ${this.channel} Update`);
     this.platform.log.debug('  tempc:', tempc);
     this.platform.log.debug('  humidty:', humidity);
     this.current_temp = tempc;

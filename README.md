@@ -1,9 +1,8 @@
 
 # Ecowitt Sensors Homebridge Plugin
 
-**NOTE: This is a fork of [homebridge-ecowitt](https://github.com/@bzwan/homebridge-ecowitt) that adds the following functionality:**
-- Adds WH90 support
-- Issue with piezo rain sensors fixed (at least EasyWeather v5.1.1 and Console Firmware v1.9.0 required).
+**NOTE: This is a fork of [christocomm/homebridge-ecowitt](https://github.com/christocomm/homebridge-ecowitt) that adds the following functionality:**
+- Added option for even less update logging
 
 A Homebridge plugin providing support for a wide range of **Ecowitt** sensors.
 
@@ -16,6 +15,10 @@ Features include -
 * Configurable display units
 
 ## Release Notes
+
+* 1.3.0
+  * Cloned from christocomm/homebridge-ecowitt v1.2.1 (2023-10-23)
+  * Added option for even less update logging
 
 * 1.2.0
   * Added support for WH90
@@ -52,7 +55,7 @@ Search for "Ecowitt" in [homebridge-config-ui-x](https://github.com/oznu/homebri
 #### Option 2: Manually Install:
 
 ```
-sudo npm install -g @bzwan/homebridge-ecowitt
+sudo npm install -g @kshakir/homebridge-ecowitt
 ```
 
 ## Configuration

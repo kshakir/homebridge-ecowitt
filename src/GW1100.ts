@@ -20,9 +20,9 @@ export class GW1100 extends ThermoHygroBaroSensor
     this.setName(this.temperatureSensor, 'Indoor Temperature');
   }
 
-  update(dataReport)
+  update(dataReport, logLevel)
   {
-    this.platform.log.info('GW1100A Update');
+    this.platform.log.log(logLevel, 'GW1100A Update');
     this.platform.log.debug('  tempinf:', dataReport.tempinf);
     this.platform.log.debug('  humidityin:', dataReport.humidityin);
     this.platform.log.debug('  baromrelin', dataReport.baromrelin);
@@ -34,4 +34,3 @@ export class GW1100 extends ThermoHygroBaroSensor
     this.updateTemperature(dataReport.tempinf);
   }
 }
-

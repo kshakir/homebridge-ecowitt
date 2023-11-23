@@ -1,4 +1,4 @@
-import { API, DynamicPlatformPlugin, Logger, PlatformAccessory, PlatformConfig, Service, Characteristic } from 'homebridge';
+import {API, DynamicPlatformPlugin, Logger, PlatformAccessory, PlatformConfig, Service, Characteristic, LogLevel} from 'homebridge';
 
 import { PLATFORM_NAME, PLUGIN_NAME } from './settings';
 
@@ -407,13 +407,14 @@ export class EcowittPlatform implements DynamicPlatformPlugin
 
   updateAccessories(dataReport)
   {
+    const updateLogLevel = this.config?.updatelogleveldebug ? LogLevel.DEBUG : LogLevel.INFO;
     const dateUTC = new Date(dataReport.dateutc);
-    this.log.info('Report time:', dateUTC);
+    this.log.log(updateLogLevel, 'Report time:', dateUTC);
 
     for (const sensor of this.baseStationInfo.sensors)
     {
-      this.log.info('Updating:', sensor.type, 'channel:', sensor.channel);
-      sensor.accessory.update(dataReport);
+      this.log.debug('Updating:', sensor.type, 'channel:', sensor.channel);
+      sensor.accessory.update(dataReport, updateLogLevel);
     }
   }
 }
